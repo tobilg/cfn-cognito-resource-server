@@ -43,9 +43,6 @@ It could look like the following once you created the above named resources as f
 service:
     name: 'test-custom-cognito-resource-server'
 
-plugins:
-  - serverless-pseudo-parameters
-
 provider:
   name: aws
   runtime: nodejs10.x
