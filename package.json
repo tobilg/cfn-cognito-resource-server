@@ -1,6 +1,6 @@
 {
   "name": "cfn-cognito-resource-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A custom CloudFormation resource for Cognito Resource Servers",
   "main": "index.js",
   "scripts": {
@@ -28,8 +28,6 @@
   "dependencies": {},
   "devDependencies": {
     "aws-sdk": "^2.601.0",
-    "cfn-response": "^1.0.1",
-    "serverless-pseudo-parameters": "^2.5.0",
     "terser": "^4.6.2"
   }
 }

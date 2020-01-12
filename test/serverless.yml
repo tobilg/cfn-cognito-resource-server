@@ -1,9 +1,6 @@
 service:
     name: 'test-custom-cognito-resource-server1'
 
-plugins:
-  - serverless-pseudo-parameters
-
 provider:
   name: aws
   runtime: nodejs10.x
