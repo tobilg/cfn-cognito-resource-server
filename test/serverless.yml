@@ -1,0 +1,16 @@
+service:
+    name: 'test-custom-cognito-resource-server1'
+
+plugins:
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  
+resources:
+  - ${file(resources/cognito.yml)}
+  - ${file(../dist/sls-cognito-resource-server.yml)}
+  - ${file(resources/cognito-resource-server.yml)}

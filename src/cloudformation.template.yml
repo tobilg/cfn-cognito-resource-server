@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Custom Cognito Resource Server CloudFormation resource
+Resources:
+  CustomResourceServerLambda:
+    Metadata:
+      Source: https://github.com/tobilg/cfn-custom-resource-server
+      Version: 0.1.0
+    Properties:
+      Code:
+        ZipFile: |
+$SOURCE
+      Description: Cloudformation custom resource for Cognito Resource Servers
+      Handler: index.handler
+      Role: !GetAtt 'CustomResourceServerLambdaExecutionRole.Arn'
+      Runtime: nodejs10.x
+      Timeout: 30
+    Type: AWS::Lambda::Function
+  CustomResourceServerLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaRole
+      Policies:
+        - PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - cognito-idp:CreateResourceServer
+                  - cognito-idp:UpdateResourceServer
+                  - cognito-idp:DeleteResourceServer
+                Resource: !Sub 'arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/*'
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*'
+          PolicyName: !Sub 'CustomResourceServerLambdaExecutionPolicy-${AWS::StackName}'
+    

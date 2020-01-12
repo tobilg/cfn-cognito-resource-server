@@ -1,0 +1,15 @@
+Resources:
+  CognitoResourceServer:
+    Type: 'Custom::CognitoResourceServer'
+    Properties:
+      Name: 'example.com API Cognito Resource Server'
+      Identifier: 'https://api.example.com'
+      UserPoolId: 
+        Ref: CognitoUserPool
+      Scopes:
+        - Name: 'myscope:read'
+          Description: 'Read permissions'
+        - Name: 'myscope:write'
+          Description: 'Write permissions'
+      ServiceToken: 
+        'Fn::GetAtt': [CustomResourceServerLambda, Arn]

@@ -1,0 +1,35 @@
+{
+  "name": "cfn-cognito-resource-server",
+  "version": "0.1.0",
+  "description": "A custom CloudFormation resource for Cognito Resource Servers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node scripts/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tobilg/cfn-cognito-resource-server.git"
+  },
+  "keywords": [
+    "cloudformation",
+    "cognito",
+    "resource",
+    "server",
+    "custom",
+    "resource"
+  ],
+  "author": "TobiLG <tobilg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tobilg/cfn-cognito-resource-server/issues"
+  },
+  "homepage": "https://github.com/tobilg/cfn-cognito-resource-server#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "aws-sdk": "^2.601.0",
+    "cfn-response": "^1.0.1",
+    "serverless-pseudo-parameters": "^2.5.0",
+    "terser": "^4.6.2"
+  }
+}
