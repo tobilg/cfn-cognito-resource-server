@@ -66,7 +66,7 @@ exports.handler = function (event, context, callback) {
     }
   } catch (err) {
     console.log(err);
-    sendResponse(event, context, 'FAILED');
+    sendResponse(event, context, 'FAILED', { error: err });
   }
 }
 
@@ -86,7 +86,7 @@ function setupWatchdogTimer (event, context, callback) {
 function sendResponse (event, context, responseStatus, responseData) {
   const responseBody = JSON.stringify({
     Status: responseStatus,
-    Reason: (responseData && JSON.stringify(responseData.error) ? responseData.error : '-'), //'See: ' + context.logStreamName,
+    Reason: (responseData && responseData.hasOwnProperty('error') && responseData.error.hasOwnProperty('message') ? responseData.error.message : '-'),
     PhysicalResourceId: event.LogicalResourceId,
     StackId: event.StackId,
     RequestId: event.RequestId,
