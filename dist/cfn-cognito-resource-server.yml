@@ -4,7 +4,7 @@ Resources:
   CustomResourceServerLambda:
     Metadata:
       Source: https://github.com/tobilg/cfn-custom-resource-server
-      Version: 0.1.1
+      Version: 0.1.2
     Properties:
       Code:
         ZipFile: |
@@ -52,7 +52,7 @@ Resources:
           function sendResponse(e, o, s, r) {
             const t = JSON.stringify({
               Status: s,
-              Reason: r && JSON.stringify(r.error) ? r.error : '-',
+              Reason: r && r.hasOwnProperty('error') && r.error.hasOwnProperty('message') ? r.error.message : '-',
               PhysicalResourceId: e.LogicalResourceId,
               StackId: e.StackId,
               RequestId: e.RequestId,
@@ -79,7 +79,9 @@ Resources:
             try {
               setupWatchdogTimer(e, o, s), console.log(JSON.stringify(e)), 'Create' === e.RequestType ? handleRequest(e, o, 'createResourceServer', [ 'Identifier', 'Name', 'UserPoolId', 'Scopes' ]) : 'Update' === e.RequestType ? handleRequest(e, o, 'updateResourceServer', [ 'Identifier', 'Name', 'UserPoolId', 'Scopes' ]) : 'Delete' === e.RequestType && handleRequest(e, o, 'deleteResourceServer', [ 'Identifier', 'UserPoolId' ]);
             } catch (s) {
-              console.log(s), sendResponse(e, o, 'FAILED');
+              console.log(s), sendResponse(e, o, 'FAILED', {
+                error: s
+              });
             }
           };
       Description: Cloudformation custom resource for Cognito Resource Servers
